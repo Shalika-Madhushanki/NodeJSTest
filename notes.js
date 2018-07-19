@@ -33,31 +33,42 @@ var addNote = (title,body) => {
     if (duplicateNotes.length === 0){
         notes.push(note);
         saveNotes(notes);
-        console.log("Added note : title as '"+title+ "' with the text of '"+body+"'");
-    }else{
-        console.log("Title already existing");
+        return note;
     }
 };
 
 var getAll = () => {
-  var notes=fetchNotes();
+  return fetchNotes();
   
   console.log("Listing all notes");
 };
 
 var getNote =(title) => {
-    console.log("Listing ", title, "note");
-}
+    var notes = fetchNotes();
+    var filteredNote = notes.filter((note)=> note.title === title);
+    // console.log("title : ",filteredNote.title,"\nbody :",filteredNote.body);
+    return filteredNote[0];
+};
 
 var remove = (title) => {
-  console.log("Removed",title,"note");
-}
+    var notes = fetchNotes();
+    var filteredNotes = notes.filter((note)=> note.title !==title);
+    saveNotes(filteredNotes);
+    return notes.length !== filteredNotes.length;
+};
+
+var logNote = (note) => {
+    console.log("--");
+    console.log(`Title : ${note.title}`);
+    console.log(`body : ${note.body}`);
+};
 
 module.exports={
   addNote,
     getAll,
     getNote,
-    remove
+    remove,
+    logNote
 };
 
 
